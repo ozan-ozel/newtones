@@ -1,0 +1,40 @@
+﻿[package]
+name    = "livedsp"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+# Audio I/O via ASIO host on Windows.
+cpal = { version = "*", features = ["asio"] }
+
+# Wait-free SPSC ring buffer for the RT bridge.
+rtrb = "*"
+
+# Latest-state share between UI and audio threads.
+triple_buffer = "*"
+
+# Fixed-capacity collections for the hot path.
+heapless = "*"
+
+# Fail fast if the audio callback ever allocates.
+assert_no_alloc = "*"
+
+# Stop denormals from tanking CPU in delay/reverb feedback tails.
+no_denormals = "*"
+
+# Promote the audio thread priority correctly.
+audio_thread_priority = "*"
+
+# Minimal UI on a non-RT thread.
+eframe = "*"
+egui   = "*"
+
+[profile.release]
+lto           = "fat"
+codegen-units = 1
+panic         = "abort"
+debug         = 1
+
+[profile.dev]
+opt-level = 1
